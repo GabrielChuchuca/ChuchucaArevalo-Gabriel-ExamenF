@@ -8,6 +8,7 @@
 		<jta-data-source>jdbc/__restaurante</jta-data-source>
 		<class>ec.edu.ups.modelo.Cliente</class>
 		<class>ec.edu.ups.modelo.Restaurante</class>
+		<class>ec.edu.ups.modelo.Reserva</class>
 		<properties>
 			<property
 				name="javax.persistence.schema-generation.database.action"

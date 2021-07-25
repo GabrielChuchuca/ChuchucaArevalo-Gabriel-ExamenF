@@ -8,8 +8,10 @@ import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -48,12 +50,34 @@ public class ClienteREST {
 			Cliente newCliente = new Cliente(cedula, nombres, apellidos, correo, direccion, telefono);
 			//Cliente newCliente = json.fromJson(jsonUsuario, Cliente.class);
 			clienteFacade.create(newCliente);
-			Respuesta res = jsonr.fromJson("{\"estadoCreacion\":\"USUARIO CREADO\"}", Respuesta.class);
+			Respuesta res = jsonr.fromJson("{\"estado\":\"USUARIO CREADO\"}", Respuesta.class);
 			return Response.ok().entity(res).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Allow-Headers", "Content-Type").header("Access-Control-Allow-Methods", "*").build();
 		}catch (Exception e) {
 			// TODO: handle exception
-			Respuesta res = jsonr.fromJson("{\"estadoCreacion\":\"ERROR EN LA CREACION\"}", Respuesta.class);
+			Respuesta res = jsonr.fromJson("{\"estado\":\"ERROR EN LA CREACION\"}", Respuesta.class);
+			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+		}
+	}
+	
+	@GET
+	@Path("/clienteB/{cedula}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getC(@PathParam("cedula") String cedula) {
+		if (cedula != "") {
+			Jsonb jsonb = JsonbBuilder.create();
+			
+			try {
+				Cliente cli = clienteFacade.find(cedula);
+				return  Response.ok(jsonb.toJson(cli)).header("Access-Control-Allow-Origin", "*").build();
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+				Respuesta res = jsonr.fromJson("{\"estado\":\"USUARIO NO ENCONTRADO\"}", Respuesta.class);
+				return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+			}
+		}else {
+			Respuesta res = jsonr.fromJson("{\"estado\":\"CEDULA INSUFICIENTE\"}", Respuesta.class);
 			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
 		}
 	}

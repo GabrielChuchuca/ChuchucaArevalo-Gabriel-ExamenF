@@ -1,9 +1,13 @@
 package ec.edu.ups.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * Entity implementation class for Entity: Cliente
@@ -20,6 +24,9 @@ public class Cliente implements Serializable {
 	private String correo;
 	private String direccion;
 	private String telefono;
+	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Reserva> reservas = new ArrayList<>();
 
 	public Cliente() {
 
@@ -119,6 +126,20 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
+	/**
+	 * @return the reserva
+	 */
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	/**
+	 * @param reserva the reserva to set
+	 */
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -128,6 +149,7 @@ public class Cliente implements Serializable {
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
+		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		return result;
 	}
@@ -166,6 +188,11 @@ public class Cliente implements Serializable {
 				return false;
 		} else if (!nombres.equals(other.nombres))
 			return false;
+		if (reservas == null) {
+			if (other.reservas != null)
+				return false;
+		} else if (!reservas.equals(other.reservas))
+			return false;
 		if (telefono == null) {
 			if (other.telefono != null)
 				return false;
@@ -176,8 +203,7 @@ public class Cliente implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Restaurante [cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo="
-				+ correo + ", direccion=" + direccion + ", telefono=" + telefono + "]";
+		return "Cliente [cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo=" + correo
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", reservas=" + reservas + "]";
 	}
-
 }

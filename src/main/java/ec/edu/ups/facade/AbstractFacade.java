@@ -23,4 +23,8 @@ public abstract class AbstractFacade<T> {
 		getEntityManager().persist(entity);
 	}
 
+	public T find(Object id) {
+		return getEntityManager().find(entityClass, id);
+	}
+
 }

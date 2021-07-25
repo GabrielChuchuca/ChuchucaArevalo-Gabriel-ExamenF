@@ -7,8 +7,10 @@ import javax.ejb.EJB;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -35,20 +37,40 @@ public class RestauranteRest {
 	public Response ResponseCR(@FormParam("nombre") String nombre,
 			@FormParam("direccion") String direccion,
 			@FormParam("telefono") String telefono,
-			@FormParam("numForo") int numForo) {
+			@FormParam("numAforo") int numAforo) {
 		jsonr = JsonbBuilder.create();
 		try {
-			Restaurante newRestaurante = new Restaurante(nombre, direccion, telefono, numForo);
+			Restaurante newRestaurante = new Restaurante(nombre, direccion, telefono, numAforo);
 			restauranteFacade.create(newRestaurante);
-			Respuesta res = jsonr.fromJson("{\"estadoCreacion\":\"RESTAURANTE CREADO\"}", Respuesta.class);
+			Respuesta res = jsonr.fromJson("{\"estado\":\"RESTAURANTE CREADO\"}", Respuesta.class);
 			return Response.ok().entity(res).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Allow-Headers", "Content-Type").header("Access-Control-Allow-Methods", "*").build();
 		}catch (Exception e) {
 			// TODO: handle exception
-			Respuesta res = jsonr.fromJson("{\"estadoCreacion\":\"ERROR EN LA CREACION\"}", Respuesta.class);
+			Respuesta res = jsonr.fromJson("{\"estado\":\"ERROR EN LA CREACION\"}", Respuesta.class);
+			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+		}
+	}
+	
+	@GET
+	@Path("/restauranteB/{nombre}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getRe(@PathParam("nombre") String nombre) {
+		if (nombre != "") {
+			Jsonb jsonb = JsonbBuilder.create();
+			try {
+				Restaurante rest = restauranteFacade.find(nombre);
+				return  Response.ok(jsonb.toJson(rest)).header("Access-Control-Allow-Origin", "*").build();
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+				Respuesta res = jsonr.fromJson("{\"estado\":\"RESTAURANTE NO ENCONTRADO\"}", Respuesta.class);
+				return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+			}
+		}else {
+			Respuesta res = jsonr.fromJson("{\"estado\":\"DATOS INSUFICIENTE\"}", Respuesta.class);
 			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
 		}
 		
 	}
-
 }

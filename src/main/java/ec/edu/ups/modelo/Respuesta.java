@@ -8,27 +8,24 @@ package ec.edu.ups.modelo;
  *
  */
 public class Respuesta {
-	private String estadoCreacion;
+	private String estado;
 
 	/**
-	 * @return the estadoCreacionUsuario
+	 * @return the estado
 	 */
-	public String getEstadoCreacion() {
-		return estadoCreacion;
+	public String getEstado() {
+		return estado;
 	}
 
 	/**
-	 * @param estadoCreacionUsuario the estadoCreacionUsuario to set
+	 * @param estado the estado to set
 	 */
-	public void setEstadoCreacion(String estadoCreacion) {
-		this.estadoCreacion = estadoCreacion;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	@Override
 	public String toString() {
-		return "Respuesta [estadoCreacion=" + estadoCreacion + "]";
+		return "Respuesta [estado=" + estado + "]";
 	}
-	
-	
-
 }
