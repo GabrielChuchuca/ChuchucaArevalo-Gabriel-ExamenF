@@ -16,6 +16,7 @@ public class Restaurante implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_restaurante")
 	private int id;
 	private String nombre;
 	private String direccion;
@@ -106,20 +107,6 @@ public class Restaurante implements Serializable {
 		this.numAforo = numAforo;
 	}
 
-	/**
-	 * @return the reserva
-	 */
-	public List<Reserva> getReservas() {
-		return reservas;
-	}
-
-	/**
-	 * @param reserva the reserva to set
-	 */
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -128,7 +115,6 @@ public class Restaurante implements Serializable {
 		result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + numAforo;
-		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		return result;
 	}
@@ -156,11 +142,6 @@ public class Restaurante implements Serializable {
 			return false;
 		if (numAforo != other.numAforo)
 			return false;
-		if (reservas == null) {
-			if (other.reservas != null)
-				return false;
-		} else if (!reservas.equals(other.reservas))
-			return false;
 		if (telefono == null) {
 			if (other.telefono != null)
 				return false;
@@ -172,6 +153,6 @@ public class Restaurante implements Serializable {
 	@Override
 	public String toString() {
 		return "Restaurante [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", numAforo=" + numAforo + ", reservas=" + reservas + "]";
+				+ ", numAforo=" + numAforo + "]";
 	}
 }

@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  * Entity implementation class for Entity: Cliente
@@ -18,9 +15,9 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name="cedula_cliente")
 	private String cedula;
 	private String nombres;
-	private String apellidos;
 	private String correo;
 	private String direccion;
 	private String telefono;
@@ -32,11 +29,10 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(String cedula, String nombres, String apellidos, String correo, String direccion, String telefono) {
+	public Cliente(String cedula, String nombres, String correo, String direccion, String telefono) {
 		super();
 		this.cedula = cedula;
 		this.nombres = nombres;
-		this.apellidos = apellidos;
 		this.correo = correo;
 		this.direccion = direccion;
 		this.telefono = telefono;
@@ -68,20 +64,6 @@ public class Cliente implements Serializable {
 	 */
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
-	}
-
-	/**
-	 * @return the apellidos
-	 */
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	/**
-	 * @param apellidos the apellidos to set
-	 */
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
 	}
 
 	/**
@@ -126,30 +108,14 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
-	/**
-	 * @return the reserva
-	 */
-	public List<Reserva> getReservas() {
-		return reservas;
-	}
-
-	/**
-	 * @param reserva the reserva to set
-	 */
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
 		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
-		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		return result;
 	}
@@ -163,11 +129,6 @@ public class Cliente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		if (apellidos == null) {
-			if (other.apellidos != null)
-				return false;
-		} else if (!apellidos.equals(other.apellidos))
-			return false;
 		if (cedula == null) {
 			if (other.cedula != null)
 				return false;
@@ -188,11 +149,6 @@ public class Cliente implements Serializable {
 				return false;
 		} else if (!nombres.equals(other.nombres))
 			return false;
-		if (reservas == null) {
-			if (other.reservas != null)
-				return false;
-		} else if (!reservas.equals(other.reservas))
-			return false;
 		if (telefono == null) {
 			if (other.telefono != null)
 				return false;
@@ -203,7 +159,7 @@ public class Cliente implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cliente [cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo=" + correo
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", reservas=" + reservas + "]";
+		return "Cliente [cedula=" + cedula + ", nombres=" + nombres + ", correo=" + correo + ", direccion=" + direccion
+				+ ", telefono=" + telefono + "]";
 	}
 }

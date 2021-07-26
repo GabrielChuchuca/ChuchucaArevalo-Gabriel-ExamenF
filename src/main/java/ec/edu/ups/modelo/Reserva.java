@@ -2,7 +2,7 @@ package ec.edu.ups.modelo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -15,23 +15,26 @@ public class Reserva implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_reserva")
 	private int id;
 	
 	private int numPersonas;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private GregorianCalendar fechaHoraReserva;
+	private Date fechaHoraReserva;
 	
 	@ManyToOne
+	@JoinColumn(name="cedula_cliente")
 	private Cliente cliente;
 	
 	@ManyToOne
+	@JoinColumn(name="id_restaurante")
 	private Restaurante restaurante;
 	
 	public Reserva() {
 	}
 
-	public Reserva(int numPersonas, GregorianCalendar fechaHoraReserva, Cliente cliente, Restaurante restaurante) {
+	public Reserva(int numPersonas, Date fechaHoraReserva, Cliente cliente, Restaurante restaurante) {
 		super();
 		this.numPersonas = numPersonas;
 		this.fechaHoraReserva = fechaHoraReserva;
@@ -70,14 +73,14 @@ public class Reserva implements Serializable {
 	/**
 	 * @return the fechaHoraReserva
 	 */
-	public GregorianCalendar getFechaHoraReserva() {
+	public Date getFechaHoraReserva() {
 		return fechaHoraReserva;
 	}
 
 	/**
 	 * @param fechaHoraReserva the fechaHoraReserva to set
 	 */
-	public void setFechaHoraReserva(GregorianCalendar fechaHoraReserva) {
+	public void setFechaHoraReserva(Date fechaHoraReserva) {
 		this.fechaHoraReserva = fechaHoraReserva;
 	}
 

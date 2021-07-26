@@ -9,6 +9,7 @@ import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -25,7 +26,7 @@ import ec.edu.ups.modelo.Restaurante;
  */
 
 @Path("/restaurante")
-public class RestauranteRest {
+public class RestauranteREST {
 	@EJB
 	private RestauranteFacade restauranteFacade;
 	private Jsonb jsonr;
@@ -52,15 +53,15 @@ public class RestauranteRest {
 		}
 	}
 	
-	@GET
-	@Path("/restauranteB/{nombre}")
+	@POST
+	@Path("/restauranteB")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRe(@PathParam("nombre") String nombre) {
+	public Response getRe(@FormParam("nombre") String nombre) {
 		if (nombre != "") {
 			Jsonb jsonb = JsonbBuilder.create();
 			try {
-				Restaurante rest = restauranteFacade.find(nombre);
-				return  Response.ok(jsonb.toJson(rest)).header("Access-Control-Allow-Origin", "*").build();
+				Restaurante rest = restauranteFacade.findByNameR(nombre);
+				return  Response.ok(jsonb.toJson(rest)).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "Content-Type").header("Access-Control-Allow-Methods", "*").build();
 				
 			}catch (Exception e) {
 				// TODO: handle exception
@@ -72,5 +73,30 @@ public class RestauranteRest {
 			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
 		}
 		
+	}
+	
+	@Path("/actualizarForo")
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response actualizarA(@FormParam("nombre") String nombre, @FormParam("numP") Integer numP) {
+		if (nombre != "") {
+			Jsonb jsonb = JsonbBuilder.create();
+			try {
+				Restaurante rest = restauranteFacade.findByNameR(nombre);
+				rest.setNumAforo(rest.getNumAforo() - numP);
+				restauranteFacade.edit(rest);
+				Respuesta res = jsonr.fromJson("{\"estado\":\"NUMERO DE AFORO ACTUALIZADO\"}", Respuesta.class);
+				//Respuesta res = jsonr.fromJson(rest, Restaurante.class);
+				return Response.ok().entity(res).header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Headers", "Content-Type").header("Access-Control-Allow-Methods", "*").build();
+			} catch (Exception e) {
+				// TODO: handle exception
+				Respuesta res = jsonr.fromJson("{\"estado\":\"ERROR EN LA ACTUALIZACION\"}", Respuesta.class);
+				return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+			}
+		}else {
+			Respuesta res = jsonr.fromJson("{\"estado\":\"ERROR\"}", Respuesta.class);
+			return Response.status(500).entity(res).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").build();
+		}
 	}
 }
