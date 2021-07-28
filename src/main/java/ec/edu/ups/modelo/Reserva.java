@@ -2,6 +2,7 @@ package ec.edu.ups.modelo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -21,7 +22,8 @@ public class Reserva implements Serializable {
 	private int numPersonas;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaHoraReserva;
+	private Calendar fechaHoraReserva;
+	//private Date fechaHoraReserva;
 	
 	@ManyToOne
 	@JoinColumn(name="cedula_cliente")
@@ -34,7 +36,7 @@ public class Reserva implements Serializable {
 	public Reserva() {
 	}
 
-	public Reserva(int numPersonas, Date fechaHoraReserva, Cliente cliente, Restaurante restaurante) {
+	public Reserva(int numPersonas, Calendar fechaHoraReserva, Cliente cliente, Restaurante restaurante) {
 		super();
 		this.numPersonas = numPersonas;
 		this.fechaHoraReserva = fechaHoraReserva;
@@ -73,14 +75,14 @@ public class Reserva implements Serializable {
 	/**
 	 * @return the fechaHoraReserva
 	 */
-	public Date getFechaHoraReserva() {
+	public Calendar getFechaHoraReserva() {
 		return fechaHoraReserva;
 	}
 
 	/**
 	 * @param fechaHoraReserva the fechaHoraReserva to set
 	 */
-	public void setFechaHoraReserva(Date fechaHoraReserva) {
+	public void setFechaHoraReserva(Calendar fechaHoraReserva) {
 		this.fechaHoraReserva = fechaHoraReserva;
 	}
 

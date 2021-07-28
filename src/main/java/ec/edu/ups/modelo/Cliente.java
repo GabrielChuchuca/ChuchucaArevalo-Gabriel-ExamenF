@@ -13,11 +13,12 @@ import javax.persistence.*;
 @Entity
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@Column(name="cedula_cliente")
 	private String cedula;
 	private String nombres;
+	private String apellidos;
 	private String correo;
 	private String direccion;
 	private String telefono;
@@ -29,10 +30,11 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(String cedula, String nombres, String correo, String direccion, String telefono) {
+	public Cliente(String cedula, String nombres, String apellidos, String correo, String direccion, String telefono) {
 		super();
 		this.cedula = cedula;
 		this.nombres = nombres;
+		this.apellidos = apellidos;
 		this.correo = correo;
 		this.direccion = direccion;
 		this.telefono = telefono;
@@ -64,6 +66,20 @@ public class Cliente implements Serializable {
 	 */
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
+	}
+
+	/**
+	 * @return the apellidos
+	 */
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	/**
+	 * @param apellidos the apellidos to set
+	 */
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
 	/**
@@ -112,6 +128,7 @@ public class Cliente implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
 		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
@@ -129,6 +146,11 @@ public class Cliente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
+		if (apellidos == null) {
+			if (other.apellidos != null)
+				return false;
+		} else if (!apellidos.equals(other.apellidos))
+			return false;
 		if (cedula == null) {
 			if (other.cedula != null)
 				return false;
@@ -159,7 +181,7 @@ public class Cliente implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cliente [cedula=" + cedula + ", nombres=" + nombres + ", correo=" + correo + ", direccion=" + direccion
-				+ ", telefono=" + telefono + "]";
+		return "Cliente [cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", correo=" + correo
+				+ ", direccion=" + direccion + ", telefono=" + telefono + "]";
 	}
 }

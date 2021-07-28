@@ -30,16 +30,10 @@ public class ReservaFacade extends AbstractFacade<Reserva>{
 		return em;
 	}
 	
-	public List<Reserva> getReservaxC(String ced){
-		try {
-			//from public.reserva r where r.cedula_cliente ='0105662068'
-    		String jpql = "FROM Reserva r WHERE r.cedula_cliente = '"+ced+"'";
-            return (List<Reserva>) em.createQuery(jpql).getResultList();
-    	}catch (Exception e) {
-			// TODO: handle exception
-    		//System.out.println("Error: "+e)
-    		return null;
-            //return null;
-		}
+	public List<Reserva> getReservaxC(String cedula){
+		//from public.reserva r where r.cedula_cliente ='0105662068'
+		String jpql = "SELECT r FROM Cliente c, Reserva r, Restaurante re WHERE r.cedula_cliente = '"+cedula+"'";
+		return (List<Reserva>) em.createQuery(jpql).getResultList();
 	}
+
 }

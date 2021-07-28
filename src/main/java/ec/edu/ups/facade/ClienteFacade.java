@@ -31,7 +31,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
         return em;
     }
    
-    public Cliente findByNameFull(String name)
+    /*public Cliente findByNameFull(String name)
     {
     	try {
     		String jpql = "FROM Cliente c WHERE c.nombres = ?1";
@@ -44,6 +44,6 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
             return null;
 		}
     	
-    }
+    }*/
 
 }

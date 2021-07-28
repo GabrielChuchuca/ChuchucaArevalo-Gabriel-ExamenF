@@ -38,7 +38,8 @@ public class ClienteREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	//public Response ResponseCU(String jsonUsuario) {
 	public Response ResponseCU(@FormParam("cedula") String cedula, 
-			@FormParam("nombresCompletos") String nombresCompletos, 
+			@FormParam("nombres") String nombres, 
+			@FormParam("apellidos") String apellidos,
 			@FormParam("correo") String correo, 
 			@FormParam("direccion") String direccion, 
 			@FormParam("telefono") String telefono) {
@@ -46,7 +47,7 @@ public class ClienteREST {
 		//json = JsonbBuilder.create();
 		jsonr = JsonbBuilder.create();
 		try {
-			Cliente newCliente = new Cliente(cedula, nombresCompletos, correo, direccion, telefono);
+			Cliente newCliente = new Cliente(cedula, nombres, apellidos, correo, direccion, telefono);
 			//Cliente newCliente = json.fromJson(jsonUsuario, Cliente.class);
 			clienteFacade.create(newCliente);
 			Respuesta res = jsonr.fromJson("{\"estado\":\"USUARIO CREADO\"}", Respuesta.class);
@@ -62,12 +63,12 @@ public class ClienteREST {
 	@POST
 	@Path("/clienteFind")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getC(@FormParam("nombres") String nombres) {
-		if (nombres != "") {
+	public Response getC(@FormParam("cedula") String cedula) {
+		if (cedula != "") {
 			Jsonb jsonb = JsonbBuilder.create();
 			
 			try {
-				Cliente cli = clienteFacade.findByNameFull(nombres);
+				Cliente cli = clienteFacade.find(cedula);
 				return  Response.ok(jsonb.toJson(cli)).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "Content-Type").header("Access-Control-Allow-Methods", "*").build();
 				
 			}catch (Exception e) {
