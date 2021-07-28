@@ -69,8 +69,10 @@ public class Test {
 		//2021 - 07 - 29   22 : 20
 		
 		//dfdfdfdfdd-012345678911234
-		String fh = "2021-07-27 22:20";
-		int y = Integer.parseInt(fh.substring(0, 4));
+		//String fh = "2021-07-27 22:20";
+		
+		
+		/*int y = Integer.parseInt(fh.substring(0, 4));
 		int me = Integer.parseInt(fh.substring(5, 7));
 		int d = Integer.parseInt(fh.substring(8, 10));
 		int h = Integer.parseInt(fh.substring(11, 13));
@@ -80,18 +82,16 @@ public class Test {
 		System.out.println(d);
 		System.out.println(h);
 		System.out.println(mi);
-		System.out.println("");
+		System.out.println("");*/
 		
-		/*Calendar fg = new GregorianCalendar(y,7,d,h,mi,0);
-		System.out.println(fg.get(Calendar.YEAR));
+		Calendar fg = new GregorianCalendar();
+		/*System.out.println(fg.get(Calendar.YEAR));
 		System.out.println(fg.get(Calendar.MONTH));
 		System.out.println(fg.get(Calendar.DAY_OF_MONTH));
 		System.out.println(fg.get(Calendar.HOUR_OF_DAY));
-		System.out.println(fg.get(Calendar.MINUTE));
+		System.out.println((fg.get(Calendar.MINUTE))-30);
 		System.out.println(fg.get(Calendar.SECOND));
-		System.out.println("");
-		Date dat = fg.getTime();*/
-		Calendar fg = new GregorianCalendar(y,me,d,h,mi,0);
+		System.out.println("");*/
 		System.out.println(fg);
 		
 		//System.out.println(y);
