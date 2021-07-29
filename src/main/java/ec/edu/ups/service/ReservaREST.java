@@ -68,7 +68,7 @@ public class ReservaREST {
 				int h = Integer.parseInt(fh.substring(11, 13));
 				int mi = Integer.parseInt(fh.substring(14, 16));
 
-				Calendar fg = new GregorianCalendar(y, me, d, h, mi, 0);
+				Calendar fg = new GregorianCalendar(y, me-1, d, h, mi, 0);
 				Reserva rese = new Reserva(numP, fg, cli, rest);
 				reservaFacade.create(rese);
 				rest.setNumAforo(rest.getNumAforo() - numP);
